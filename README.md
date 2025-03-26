@@ -1,6 +1,6 @@
 # 统计检验样本量计算器
 
-这是一个用 Python (FastAPI + Bootstrap) 复刻的 A/B 测试样本量计算器，原项目是基于 R  开发的 [AB-Test-Sample-Size-Calculator](https://github.com/pieces201020/AB-Test-Sample-Size-Calculator)。本项目保持了原有的计算逻辑，同时使用现代 Web 技术栈重新实现了界面，提供了更好的用户体验。
+这是一个用 Python (FastAPI + Bootstrap) 复刻的 A/B 测试样本量计算器，原项目是基于 R  开发的 [AB-Test-Sample-Size-Calculator](https://github.com/pieces201020/AB-Test-Sample-Size-Calculator)。本项目保持了原有的计算逻辑，同时使用现代 Web 技术栈重新实现了界面，提供了一致的用户体验。
 
 ## 功能特点
 
