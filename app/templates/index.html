@@ -12,11 +12,12 @@
             padding: 20px;
         }
 
-        .container {
-            max-width: 1200px;
+        .container-fluid {
+            width: 100%;
+            max-width: 100vw;
             background-color: white;
             border-radius: 8px;
-            padding: 0;
+            padding: 0 32px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
@@ -86,8 +87,8 @@
 
         .radio-group {
             display: flex;
-            flex-direction: column;
-            gap: 10px;
+            flex-direction: row;
+            gap: 24px;
         }
 
         .nav-tabs-secondary {
@@ -143,7 +144,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-fluid">
         <div class="header">
             <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0OCA0OCI+PHBhdGggZmlsbD0iIzE5NzZEMiIgZD0iTTQwIDQySDhjLTEuMSAwLTItMC45LTItMlY4YzAtMS4xIDAuOS0yIDItMmgzMmMxLjEgMCAyIDAuOSAyIDJ2MzJjMCAxLjEtMC45IDItMiAyeiIvPjxwYXRoIGZpbGw9IiNGRkYiIGQ9Ik0zNiAxNEgxMnYtNGgyNHY0ek0yMiAyMGgtOHY0aDh2LTR6TTIyIDI4aC04djRoOHYtNHpNMjIgMjhoLTh2NGg4di00ek0zNCAyOGgtOHY0aDh2LTR6TTIyIDM2aC04djRoOHYtNHpNMzQgMzZoLTh2NGg4di00eiIvPjwvc3ZnPg=="
                 alt="计算器图标">
@@ -162,134 +163,133 @@
         <div class="main-content">
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="proportion">
-                    <form id="propForm" class="three-column-layout">
-                        <!-- 左列：基本参数输入 -->
-                        <div class="left-column">
-                            <div class="input-section">
-                                <h6>为你的测试输入合适的参数:</h6>
-                                <div class="mb-3">
-                                    <label class="form-label">原始指标</label>
-                                    <input type="number" class="form-control" name="avg_rr" required step="0.01">
-                                    <small
-                                        class="text-muted">一般是对照组的指标（比如转化率等概率类指标），也就是没有变化的指标，从历史数据中分析计算得出。<br>例如：如果原始指标为5%，输入5。</small>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">最小可检测相对提升</label>
-                                    <input type="number" class="form-control" name="lift" required>
-                                    <small
-                                        class="text-muted">最小可检测相对提升指的是通过A/B测试可以检测到指标最小的相对提升。<br>例如：如果原始指标为5%，只有当实验组指标提升到6%时才可决定是否施行A/B测试中的改变，那么此时的最小可检测相对提升就是20%（(6%
-                                        - 5%) / 5%）。</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 中间列：分组设置 -->
-                        <div class="middle-column">
-                            <div class="input-section">
-                                <div class="mb-3">
-                                    <label class="form-label">分组总数</label>
-                                    <input type="number" class="form-control" name="num_groups" required value="2">
-                                    <small
-                                        class="text-muted">输入A/B测试中的分组总数，包括对照组。<br>例如：如果A/B测试有1个对照组和1个实验组，输入2。（假设各组样本量相等）</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 右列：置信水平设置 -->
-                        <div class="right-column">
-                            <div class="input-section">
-                                <div class="mb-3">
-                                    <label class="form-label">置信水平</label>
-                                    <div class="radio-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level_prop" value="0.8"
-                                                id="conf80">
-                                            <label class="form-check-label" for="conf80">80%</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level_prop" value="0.85"
-                                                id="conf85">
-                                            <label class="form-check-label" for="conf85">85%</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level_prop" value="0.9"
-                                                id="conf90">
-                                            <label class="form-check-label" for="conf90">90%</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level_prop" value="0.95"
-                                                id="conf95" checked>
-                                            <label class="form-check-label" for="conf95">95%</label>
-                                        </div>
-                                    </div>
-                                    <small
-                                        class="text-muted">置信水平为1-α，例如：当α=5%时，置信水平=95%<br>推荐的置信水平：95%。<br>置信水平越高，需要的样本量也越大。</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 结果区域（跨越中右两列） -->
-                        <div class="results-section">
-                            <ul class="nav nav-tabs nav-tabs-secondary" id="calcTabs" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="result-tab" data-bs-toggle="tab" href="#result"
-                                        role="tab">结果</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="time-tab" data-bs-toggle="tab" href="#time" role="tab">测试时间
-                                        (测试流量固定)</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="traffic-tab" data-bs-toggle="tab" href="#traffic"
-                                        role="tab">测试流量 (测试时间固定)</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="example-tab" data-bs-toggle="tab" href="#example"
-                                        role="tab">使用案例</a>
-                                </li>
-                            </ul>
-
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active" id="result" role="tabpanel">
-                                    <div class="result-box">
-                                        <p>每组的样本量为：<span id="propPerGroup">-</span></p>
-                                        <p>总样本量为：<span id="propTotal">-</span></p>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="time" role="tabpanel">
+                    <form id="propForm">
+                        <div class="row">
+                            <!-- 左侧参数输入 -->
+                            <div class="col-4">
+                                <div class="input-section">
+                                    <h6>为你的测试输入合适的参数:</h6>
                                     <div class="mb-3">
-                                        <label class="form-label">日均流量</label>
-                                        <input type="number" class="form-control" name="daily_traffic">
+                                        <label class="form-label">原始指标</label>
+                                        <input type="number" class="form-control" name="avg_rr" required step="0.01">
+                                        <small
+                                            class="text-muted">一般是对照组的指标（比如转化率等概率类指标），也就是没有变化的指标，从历史数据中分析计算得出。<br>例如：如果原始指标为5%，输入5。</small>
                                     </div>
-                                    <div class="result-box" id="timeResult">
-                                        <p>所需时间（天）：<span id="propTimeNeeded">-</span></p>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="traffic" role="tabpanel">
                                     <div class="mb-3">
-                                        <label class="form-label">实验时长（天）</label>
-                                        <input type="number" class="form-control" name="time_period">
-                                    </div>
-                                    <div class="result-box" id="trafficResult">
-                                        <p>每日所需流量：<span id="propDailyNeeded">-</span></p>
+                                        <label class="form-label">最小可检测相对提升</label>
+                                        <input type="number" class="form-control" name="lift" required>
+                                        <small
+                                            class="text-muted">最小可检测相对提升指的是通过A/B测试可以检测到指标最小的相对提升。<br>例如：如果原始指标为5%，只有当实验组指标提升到6%时才可决定是否施行A/B测试中的改变，那么此时的最小可检测相对提升就是20%（(6%
+                                            - 5%) / 5%）。</small>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="example" role="tabpanel">
-                                    <div class="result-box">
-                                        <h6>概率类指标案例</h6>
-                                        <p>我们想要测试新的推送内容，旧推送内容有5%的点击率，对于这次测试，我们想要在95%的置信水平上至少获得10%的相对提升。</p>
-                                        <p><strong>输入：</strong></p>
-                                        <ul>
-                                            <li>原始转化率: 5%</li>
-                                            <li>分组总数: 2</li>
-                                            <li>最小可检测相对提升：10%</li>
-                                            <li>置信水平： 95%</li>
-                                        </ul>
-                                        <p><strong>输出：</strong></p>
-                                        <ul>
-                                            <li>每组需要的样本量： 31234</li>
-                                            <li>总样本量： 62468</li>
-                                        </ul>
+                            </div>
+                            <!-- 右侧：分组+置信+结果 -->
+                            <div class="col-8">
+                                <div class="d-flex flex-row gap-3">
+                                    <div class="input-section flex-fill">
+                                        <div class="mb-3">
+                                            <label class="form-label">分组总数</label>
+                                            <input type="number" class="form-control" name="num_groups" required
+                                                value="2">
+                                            <small
+                                                class="text-muted">输入A/B测试中的分组总数，包括对照组。<br>例如：如果A/B测试有1个对照组和1个实验组，输入2。（假设各组样本量相等）</small>
+                                        </div>
+                                    </div>
+                                    <div class="input-section flex-fill">
+                                        <div class="mb-3">
+                                            <label class="form-label">置信水平</label>
+                                            <div class="radio-group">
+                                                <div class="form-check me-3">
+                                                    <input class="form-check-input" type="radio" name="sig_level_prop"
+                                                        value="0.8" id="conf80">
+                                                    <label class="form-check-label" for="conf80">80%</label>
+                                                </div>
+                                                <div class="form-check me-3">
+                                                    <input class="form-check-input" type="radio" name="sig_level_prop"
+                                                        value="0.85" id="conf85">
+                                                    <label class="form-check-label" for="conf85">85%</label>
+                                                </div>
+                                                <div class="form-check me-3">
+                                                    <input class="form-check-input" type="radio" name="sig_level_prop"
+                                                        value="0.9" id="conf90">
+                                                    <label class="form-check-label" for="conf90">90%</label>
+                                                </div>
+                                                <div class="form-check me-3">
+                                                    <input class="form-check-input" type="radio" name="sig_level_prop"
+                                                        value="0.95" id="conf95" checked>
+                                                    <label class="form-check-label" for="conf95">95%</label>
+                                                </div>
+                                            </div>
+                                            <small
+                                                class="text-muted">置信水平为1-α，例如：当α=5%时，置信水平=95%<br>推荐的置信水平：95%。<br>置信水平越高，需要的样本量也越大。</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="results-section mt-3">
+                                    <ul class="nav nav-tabs nav-tabs-secondary" id="calcTabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="result-tab" data-bs-toggle="tab"
+                                                href="#result" role="tab">结果</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="time-tab" data-bs-toggle="tab" href="#time"
+                                                role="tab">测试时间
+                                                (测试流量固定)</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="traffic-tab" data-bs-toggle="tab" href="#traffic"
+                                                role="tab">测试流量 (测试时间固定)</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="example-tab" data-bs-toggle="tab" href="#example"
+                                                role="tab">使用案例</a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="result" role="tabpanel">
+                                            <div class="result-box">
+                                                <p>每组的样本量为：<span id="propPerGroup">-</span></p>
+                                                <p>总样本量为：<span id="propTotal">-</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="time" role="tabpanel">
+                                            <div class="mb-3">
+                                                <label class="form-label">日均流量</label>
+                                                <input type="number" class="form-control" name="daily_traffic">
+                                            </div>
+                                            <div class="result-box" id="timeResult">
+                                                <p>所需时间（天）：<span id="propTimeNeeded">-</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="traffic" role="tabpanel">
+                                            <div class="mb-3">
+                                                <label class="form-label">实验时长（天）</label>
+                                                <input type="number" class="form-control" name="time_period">
+                                            </div>
+                                            <div class="result-box" id="trafficResult">
+                                                <p>每日所需流量：<span id="propDailyNeeded">-</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="example" role="tabpanel">
+                                            <div class="result-box">
+                                                <h6>概率类指标案例</h6>
+                                                <p>我们想要测试新的推送内容，旧推送内容有5%的点击率，对于这次测试，我们想要在95%的置信水平上至少获得10%的相对提升。</p>
+                                                <p><strong>输入：</strong></p>
+                                                <ul>
+                                                    <li>原始转化率: 5%</li>
+                                                    <li>分组总数: 2</li>
+                                                    <li>最小可检测相对提升：10%</li>
+                                                    <li>置信水平： 95%</li>
+                                                </ul>
+                                                <p><strong>输出：</strong></p>
+                                                <ul>
+                                                    <li>每组需要的样本量： 31234</li>
+                                                    <li>总样本量： 62468</li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -297,134 +297,132 @@
                     </form>
                 </div>
                 <div class="tab-pane fade" id="mean">
-                    <form id="meanForm" class="three-column-layout">
-                        <!-- 左列：基本参数输入 -->
-                        <div class="left-column">
-                            <div class="input-section">
-                                <h6>为你的测试输入合适的参数:</h6>
-                                <div class="mb-3">
-                                    <label class="form-label">预期差值</label>
-                                    <input type="number" class="form-control" name="delta" required step="0.01">
-                                    <small class="text-muted">最小可检测相对提升指的是通过A/B测试可以检测到指标最小的绝对提升<br>
-                                        例如：如果对照组的指标均值为2，只有当实验组指标均值提升到2.5，那么此时最小可检测相对提升就为0.5（2.5-2）。<br>
-                                        最小可检测绝对提升越高，需要的样本量就越小。</small>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">标准差</label>
-                                    <input type="number" class="form-control" name="sd" required step="0.01">
-                                    <small class="text-muted">输入历史数据的标准差。<br>标准差越大，需要的样本量也越大。</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 中间列：分组设置 -->
-                        <div class="middle-column">
-                            <div class="input-section">
-                                <div class="mb-3">
-                                    <label class="form-label">分组总数</label>
-                                    <input type="number" class="form-control" name="num_groups" required value="2">
-                                    <small
-                                        class="text-muted">输入A/B测试中的分组总数，包括对照组。<br>例如：如果A/B测试有1个对照组和1个实验组，输入2。（假设各组样本量相等）</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 右列：置信水平设置 -->
-                        <div class="right-column">
-                            <div class="input-section">
-                                <div class="mb-3">
-                                    <label class="form-label">置信水平</label>
-                                    <div class="radio-group">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level_mean" value="0.8"
-                                                id="meanConf80">
-                                            <label class="form-check-label" for="meanConf80">80%</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level_mean" value="0.85"
-                                                id="meanConf85">
-                                            <label class="form-check-label" for="meanConf85">85%</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level_mean" value="0.9"
-                                                id="meanConf90">
-                                            <label class="form-check-label" for="meanConf90">90%</label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level_mean" value="0.95"
-                                                id="meanConf95" checked>
-                                            <label class="form-check-label" for="meanConf95">95%</label>
-                                        </div>
-                                    </div>
-                                    <small
-                                        class="text-muted">置信水平为1-α，例如：当α=5%时，置信水平=95%<br>推荐的置信水平：95%。<br>置信水平越高，需要的样本量也越大。</small>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- 结果区域（跨越中右两列） -->
-                        <div class="results-section">
-                            <ul class="nav nav-tabs nav-tabs-secondary" id="meanCalcTabs" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="mean-result-tab" data-bs-toggle="tab"
-                                        href="#mean-result" role="tab">结果</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="mean-time-tab" data-bs-toggle="tab" href="#mean-time"
-                                        role="tab">测试时间 (测试流量固定)</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="mean-traffic-tab" data-bs-toggle="tab" href="#mean-traffic"
-                                        role="tab">测试流量 (测试时间固定)</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="mean-example-tab" data-bs-toggle="tab" href="#mean-example"
-                                        role="tab">使用案例</a>
-                                </li>
-                            </ul>
-
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active" id="mean-result" role="tabpanel">
-                                    <div class="result-box">
-                                        <p>每组的样本量为：<span id="meanPerGroup">-</span></p>
-                                        <p>总样本量为：<span id="meanTotal">-</span></p>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="mean-time" role="tabpanel">
+                    <form id="meanForm">
+                        <div class="row">
+                            <!-- 左侧参数输入 -->
+                            <div class="col-4">
+                                <div class="input-section">
+                                    <h6>为你的测试输入合适的参数:</h6>
                                     <div class="mb-3">
-                                        <label class="form-label">日均流量</label>
-                                        <input type="number" class="form-control" name="daily_traffic">
+                                        <label class="form-label">预期差值</label>
+                                        <input type="number" class="form-control" name="delta" required step="0.01">
+                                        <small class="text-muted">最小可检测相对提升指的是通过A/B测试可以检测到指标最小的绝对提升<br>
+                                            例如：如果对照组的指标均值为2，只有当实验组指标均值提升到2.5，那么此时最小可检测相对提升就为0.5（2.5-2）。<br>
+                                            最小可检测绝对提升越高，需要的样本量就越小。</small>
                                     </div>
-                                    <div class="result-box" id="meanTimeResult">
-                                        <p>所需时间（天）：<span id="meanTimeNeeded">-</span></p>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="mean-traffic" role="tabpanel">
                                     <div class="mb-3">
-                                        <label class="form-label">实验时长（天）</label>
-                                        <input type="number" class="form-control" name="time_period">
-                                    </div>
-                                    <div class="result-box" id="meanTrafficResult">
-                                        <p>每日所需流量：<span id="meanDailyNeeded">-</span></p>
+                                        <label class="form-label">标准差</label>
+                                        <input type="number" class="form-control" name="sd" required step="0.01">
+                                        <small class="text-muted">输入历史数据的标准差。<br>标准差越大，需要的样本量也越大。</small>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="mean-example" role="tabpanel">
-                                    <div class="result-box">
-                                        <h6>均值类指标案例</h6>
-                                        <p>我们想要测试应用商店里新的游戏推荐算法对用户下载后一周的平均花费是否有提升，经计算指标的标准差为15，我们想要在95%的置信水平上至少获得0.5块钱的绝对提升。
-                                        </p>
-                                        <p><strong>输入：</strong></p>
-                                        <ul>
-                                            <li>指标的标准差: 15</li>
-                                            <li>分组总数: 2</li>
-                                            <li>最小可检测绝对提升：0.5</li>
-                                            <li>置信水平：95%</li>
-                                        </ul>
-                                        <p><strong>输出：</strong></p>
-                                        <ul>
-                                            <li>每组需要的样本量：14129</li>
-                                            <li>总样本量：28258</li>
-                                        </ul>
+                            </div>
+                            <!-- 右侧：分组+置信+结果 -->
+                            <div class="col-8">
+                                <div class="d-flex flex-row gap-3">
+                                    <div class="input-section flex-fill">
+                                        <div class="mb-3">
+                                            <label class="form-label">分组总数</label>
+                                            <input type="number" class="form-control" name="num_groups" required
+                                                value="2">
+                                            <small
+                                                class="text-muted">输入A/B测试中的分组总数，包括对照组。<br>例如：如果A/B测试有1个对照组和1个实验组，输入2。（假设各组样本量相等）</small>
+                                        </div>
+                                    </div>
+                                    <div class="input-section flex-fill">
+                                        <div class="mb-3">
+                                            <label class="form-label">置信水平</label>
+                                            <div class="radio-group">
+                                                <div class="form-check me-3">
+                                                    <input class="form-check-input" type="radio" name="sig_level_mean"
+                                                        value="0.8" id="meanConf80">
+                                                    <label class="form-check-label" for="meanConf80">80%</label>
+                                                </div>
+                                                <div class="form-check me-3">
+                                                    <input class="form-check-input" type="radio" name="sig_level_mean"
+                                                        value="0.85" id="meanConf85">
+                                                    <label class="form-check-label" for="meanConf85">85%</label>
+                                                </div>
+                                                <div class="form-check me-3">
+                                                    <input class="form-check-input" type="radio" name="sig_level_mean"
+                                                        value="0.9" id="meanConf90">
+                                                    <label class="form-check-label" for="meanConf90">90%</label>
+                                                </div>
+                                                <div class="form-check me-3">
+                                                    <input class="form-check-input" type="radio" name="sig_level_mean"
+                                                        value="0.95" id="meanConf95" checked>
+                                                    <label class="form-check-label" for="meanConf95">95%</label>
+                                                </div>
+                                            </div>
+                                            <small
+                                                class="text-muted">置信水平为1-α，例如：当α=5%时，置信水平=95%<br>推荐的置信水平：95%。<br>置信水平越高，需要的样本量也越大。</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="results-section mt-3">
+                                    <ul class="nav nav-tabs nav-tabs-secondary" id="meanCalcTabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="mean-result-tab" data-bs-toggle="tab"
+                                                href="#mean-result" role="tab">结果</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="mean-time-tab" data-bs-toggle="tab"
+                                                href="#mean-time" role="tab">测试时间 (测试流量固定)</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="mean-traffic-tab" data-bs-toggle="tab"
+                                                href="#mean-traffic" role="tab">测试流量 (测试时间固定)</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="mean-example-tab" data-bs-toggle="tab"
+                                                href="#mean-example" role="tab">使用案例</a>
+                                        </li>
+                                    </ul>
+
+                                    <div class="tab-content">
+                                        <div class="tab-pane fade show active" id="mean-result" role="tabpanel">
+                                            <div class="result-box">
+                                                <p>每组的样本量为：<span id="meanPerGroup">-</span></p>
+                                                <p>总样本量为：<span id="meanTotal">-</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="mean-time" role="tabpanel">
+                                            <div class="mb-3">
+                                                <label class="form-label">日均流量</label>
+                                                <input type="number" class="form-control" name="daily_traffic">
+                                            </div>
+                                            <div class="result-box" id="meanTimeResult">
+                                                <p>所需时间（天）：<span id="meanTimeNeeded">-</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="mean-traffic" role="tabpanel">
+                                            <div class="mb-3">
+                                                <label class="form-label">实验时长（天）</label>
+                                                <input type="number" class="form-control" name="time_period">
+                                            </div>
+                                            <div class="result-box" id="meanTrafficResult">
+                                                <p>每日所需流量：<span id="meanDailyNeeded">-</span></p>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane fade" id="mean-example" role="tabpanel">
+                                            <div class="result-box">
+                                                <h6>均值类指标案例</h6>
+                                                <p>我们想要测试应用商店里新的游戏推荐算法对用户下载后一周的平均花费是否有提升，经计算指标的标准差为15，我们想要在95%的置信水平上至少获得0.5块钱的绝对提升。
+                                                </p>
+                                                <p><strong>输入：</strong></p>
+                                                <ul>
+                                                    <li>指标的标准差: 15</li>
+                                                    <li>分组总数: 2</li>
+                                                    <li>最小可检测绝对提升：0.5</li>
+                                                    <li>置信水平：95%</li>
+                                                </ul>
+                                                <p><strong>输出：</strong></p>
+                                                <ul>
+                                                    <li>每组需要的样本量：14129</li>
+                                                    <li>总样本量：28258</li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
