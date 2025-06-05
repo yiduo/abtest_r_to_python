@@ -202,22 +202,22 @@
                                     <label class="form-label">置信水平</label>
                                     <div class="radio-group">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level" value="0.8"
+                                            <input class="form-check-input" type="radio" name="sig_level_prop" value="0.8"
                                                 id="conf80">
                                             <label class="form-check-label" for="conf80">80%</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level" value="0.85"
+                                            <input class="form-check-input" type="radio" name="sig_level_prop" value="0.85"
                                                 id="conf85">
                                             <label class="form-check-label" for="conf85">85%</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level" value="0.9"
+                                            <input class="form-check-input" type="radio" name="sig_level_prop" value="0.9"
                                                 id="conf90">
                                             <label class="form-check-label" for="conf90">90%</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level" value="0.95"
+                                            <input class="form-check-input" type="radio" name="sig_level_prop" value="0.95"
                                                 id="conf95" checked>
                                             <label class="form-check-label" for="conf95">95%</label>
                                         </div>
@@ -336,22 +336,22 @@
                                     <label class="form-label">置信水平</label>
                                     <div class="radio-group">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level" value="0.8"
+                                            <input class="form-check-input" type="radio" name="sig_level_mean" value="0.8"
                                                 id="meanConf80">
                                             <label class="form-check-label" for="meanConf80">80%</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level" value="0.85"
+                                            <input class="form-check-input" type="radio" name="sig_level_mean" value="0.85"
                                                 id="meanConf85">
                                             <label class="form-check-label" for="meanConf85">85%</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level" value="0.9"
+                                            <input class="form-check-input" type="radio" name="sig_level_mean" value="0.9"
                                                 id="meanConf90">
                                             <label class="form-check-label" for="meanConf90">90%</label>
                                         </div>
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="sig_level" value="0.95"
+                                            <input class="form-check-input" type="radio" name="sig_level_mean" value="0.95"
                                                 id="meanConf95" checked>
                                             <label class="form-check-label" for="meanConf95">95%</label>
                                         </div>
@@ -442,8 +442,13 @@
                 const form = e.target.form;
                 const formData = new FormData(form);
 
+                const sigField = formId === 'propForm' ? 'sig_level_prop' : 'sig_level_mean';
+                if (formData.get(sigField)) {
+                    formData.set('sig_level', formData.get(sigField));
+                }
+
                 // 检查必填字段是否都已填写
-                const requiredFields = ['num_groups', 'sig_level'];
+                const requiredFields = ['num_groups', sigField];
                 if (formId === 'propForm') {
                     requiredFields.push('avg_rr', 'lift');
                 } else {
